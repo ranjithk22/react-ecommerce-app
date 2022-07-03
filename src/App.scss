@@ -1,0 +1,93 @@
+// mixins
+$primary: #10b981;
+$secondary: #202051;
+
+// Reset
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+}
+
+.error {
+  outline: none;
+  border-color: red;
+
+  &:focus {
+    outline: none;
+    border-color: red;
+  }
+}
+
+.App {
+  background: white;
+  min-height: 100vh;
+
+  header {
+    padding: 0 10px;
+    height: 50px;
+    line-height: 50px;
+    color: white;
+    background-color: rgba(black, .9);
+
+
+    ul li a {
+      display: block;
+
+      i {
+        font-size: 30px;
+      }
+    }
+  }
+
+  .left-sidebar {
+    padding: 20px 0;
+    min-height: calc(100vh - 50px);
+    color: white;
+    background-color: rgba(black, .8);
+
+    h4 {
+      font-size: 18px;
+      padding: 0 20px;
+    }
+
+    ul {
+      margin-bottom: 20px;
+
+      li a {
+        color: white;
+        padding: 0 20px;
+
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  .main-content {
+    padding: 20px 30px;
+    min-height: calc(100vh - 50px);
+    background-color: rgba(black, .2);
+
+    .customers {
+      img {
+        width: 50px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
