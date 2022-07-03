@@ -1,5 +1,6 @@
-## Reference
-https://material-kit-pro-react.devias.io/dashboard
+## Refernce firestore tutorial
+https://www.youtube.com/watch?v=jCY6DH8F4oc
+status: 30:31
 
 ## Packages used
 * sass

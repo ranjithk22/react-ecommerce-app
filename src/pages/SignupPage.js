@@ -1,12 +1,16 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from "react-router-dom"
-import { addUser } from '../redux/UsersReducer'
+import { fetchUsers } from '../redux/UsersReducer'
 import { useDispatch } from 'react-redux'
+
+import { db } from '../firebase/Firebase'
+import { collection, addDoc } from 'firebase/firestore'
 
 function SignupPage() {
     const confirmPasswordRef = useRef()
     const navigate = useNavigate()
-    const dispath = useDispatch()
+    const dispatch = useDispatch()
+    const userCollection = collection(db, 'users')
     const [user, setUser] = useState({
         username: '',
         password: '',
@@ -44,10 +48,19 @@ function SignupPage() {
             confirmPasswordRef.current.classList.add('error')
         } else {
             confirmPasswordRef.current.classList.remove('error')
-            dispath(addUser(user))
+            addNewUserToDb(user)
             navigate('/');
         }
     }
+    const addNewUserToDb = async (user) => {
+        await addDoc(userCollection, { username: user.username, password: user.password })
+
+        const fetchUsersFunc = () => {
+            dispatch(fetchUsers())
+        }
+        fetchUsersFunc();
+    }
+
 
     return (
         <div className='container'>

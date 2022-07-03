@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
+import { db } from '../firebase/Firebase'
+import { collection, getDocs } from 'firebase/firestore'
 
 const initialState = {
    isLoggedIn: false,
+   currentUser: {},
    users: [
       {
-         username: 'Test',
-         password: 'test'
+         username: 'Ranjith',
+         password: 'kumar'
       }
    ],
    customers: [],
@@ -14,12 +16,19 @@ const initialState = {
    error: false
 }
 
-export const fetchCustomers = createAsyncThunk(
+const userCollection = collection(db, 'users')
+const dbUsers = []
+
+export const fetchUsers = createAsyncThunk(
    "customers/getCustomer",
    async (thunkAPI) => {
-      const res = await axios.get(`https://randomuser.me/api/?results=10`)
-         .then(res => res.data.results)
-      return res
+      const data = await getDocs(userCollection)
+      data.docs.map(doc => {
+         const tempUser = doc._document.data.value.mapValue.fields
+         dbUsers.push(tempUser)
+      })
+      console.log(dbUsers)
+      return dbUsers
    }
 )
 
@@ -27,10 +36,10 @@ const UsersReducer = createSlice({
    name: 'Users',
    initialState,
    reducers: {
-      addUser(state, { payload }) {
+      currentUser(state, { payload }) {
          return {
             ...state,
-            users: [{ ...payload }]
+            currentUser: payload
          }
       },
       toggleLoginStatus(state, { payload }) {
@@ -41,20 +50,20 @@ const UsersReducer = createSlice({
       }
    },
    extraReducers: {
-      [fetchCustomers.pending]: (state) => {
+      [fetchUsers.pending]: (state) => {
          state.loading = true
          state.error = false
       },
-      [fetchCustomers.fulfilled]: (state, { payload }) => {
+      [fetchUsers.fulfilled]: (state, { payload }) => {
          state.loading = false
          state.error = false
-         state.customers = payload
+         state.users = payload
       },
-      [fetchCustomers.rejected]: (state) => {
+      [fetchUsers.rejected]: (state) => {
          state.loading = false
          state.error = true
       },
    },
 })
-export const { addUser, toggleLoginStatus } = UsersReducer.actions
+export const { addUser, currentUser, toggleLoginStatus } = UsersReducer.actions
 export default UsersReducer.reducer

@@ -1,42 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-import { toggleLoginStatus } from '../redux/UsersReducer'
+import { Link } from 'react-router-dom'
+import { currentUser, toggleLoginStatus, fetchUsers } from '../redux/UsersReducer'
 
 function LoginPage() {
-    const { users } = useSelector(state => state.UsersReducer)
+    const dbUsers = useSelector(state => state.UsersReducer.users)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const [user, setUser] = useState({
         username: '',
         password: '',
         confirmPassword: ''
     })
 
+    useEffect(() => {
+        dispatch(fetchUsers())
+    }, [])
+
     const onUsernameChange = (e) => {
         setUser(preveState => ({ ...preveState, username: e.target.value }))
         console.log(user)
     }
-    const checkUsername = () => {
-        users.find(item => {
-            if (item.username !== user.username) {
-                alert('Username enter doest exist in database')
-            }
-        })
-    }
     const onPasswordChange = (e) => {
-        checkUsername()
         setUser(preveState => ({ ...preveState, password: e.target.value }))
         console.log(user)
     }
     const onFormSumit = (e) => {
         e.preventDefault()
-        users.find(item => {
-            if (item.username === user.username && item.password === user.password) {
-                alert('Login')
+        dbUsers.forEach(item => {
+            if (item.username.stringValue === user.username && item.password.stringValue === user.password) {
+                alert('User Exists')
                 dispatch(toggleLoginStatus())
-            } else {
-                alert(`Username & Password doesn't match`)
+                dispatch(currentUser(user))
             }
         })
     }
@@ -45,7 +39,7 @@ function LoginPage() {
             <h3>Login</h3>
             <form onSubmit={onFormSumit}>
                 <label>Enter Username</label>
-                <input type="text" value={user.username} onChange={onUsernameChange} onBlur={checkUsername} />
+                <input type="text" value={user.username} onChange={onUsernameChange} />
                 <label>Enter Password</label>
                 <input type="text" value={user.password} onChange={onPasswordChange} />
                 <button type='submit' className='btn btn-primary'>Login</button>
