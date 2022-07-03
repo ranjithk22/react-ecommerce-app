@@ -1,17 +1,17 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "@firebase/firestore";
-import { FireBaseSettings } from './FireBaseSettings'
+import { FirebaseSetting } from './FirebaseSetting'
 
 // import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-    apiKey: FireBaseSettings.apiKey,
-    authDomain: FireBaseSettings.authDomain,
-    projectId: FireBaseSettings.projectId,
-    storageBucket: FireBaseSettings.storageBucket,
-    messagingSenderId: FireBaseSettings.messagingSenderId,
-    appId: FireBaseSettings.appId,
-    measurementId: FireBaseSettings.measurementId
+    apiKey: FirebaseSetting.apiKey,
+    authDomain: FirebaseSetting.authDomain,
+    projectId: FirebaseSetting.projectId,
+    storageBucket: FirebaseSetting.storageBucket,
+    messagingSenderId: FirebaseSetting.messagingSenderId,
+    appId: FirebaseSetting.appId,
+    measurementId: FirebaseSetting.measurementId
 };
 
 const app = initializeApp(firebaseConfig);
