@@ -3,17 +3,24 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import './App.scss';
 
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
 
+import { fetchUsers } from './redux/UsersReducer'
+import { users } from './database/DummyDB'
 import SignupPage from './pages/SignupPage'
 import LoginPage from './pages/LoginPage'
 import HomePage from './pages/HomePage'
 
 function App() {
+  const dispatch = useDispatch()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const newLoginStatus = useSelector(state => state.UsersReducer.isLoggedIn)
 
+  useEffect(() => {
+    dispatch(fetchUsers(users))
+    console.log(users)
+  })
 
   useEffect(() => {
     setIsLoggedIn(newLoginStatus)

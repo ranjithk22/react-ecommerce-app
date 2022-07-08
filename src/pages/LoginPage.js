@@ -26,14 +26,21 @@ function LoginPage() {
     }
     const onFormSumit = (e) => {
         e.preventDefault()
-        dbUsers.forEach(item => {
-            if (item.username.stringValue === user.username && item.password.stringValue === user.password) {
-                alert('User Exists')
-                dispatch(toggleLoginStatus())
-                dispatch(currentUser(user))
+
+        if (dbUsers.forEach(item => {
+            if (item.username === user.username) {
+                break;
             }
-        })
+        })) {
+            dispatch(toggleLoginStatus())
+            dispatch(currentUser(user))
+            alert('User Exists')
+        } else {
+            alert('User Doesn"t Exists')
+        }
     }
+
+
     return (
         <div className='container'>
             <h3>Login</h3>

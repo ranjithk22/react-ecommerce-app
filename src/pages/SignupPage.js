@@ -1,16 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from "react-router-dom"
-import { fetchUsers } from '../redux/UsersReducer'
-import { useDispatch } from 'react-redux'
+import { addUser } from '../redux/UsersReducer'
+import { useSelector, useDispatch } from 'react-redux'
 
-import { db } from '../firebase/Firebase'
-import { collection, addDoc } from 'firebase/firestore'
 
 function SignupPage() {
-    const confirmPasswordRef = useRef()
+    const dbUsers = useSelector(state => state.UsersReducer.users)
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const userCollection = collection(db, 'users')
+    const confirmPasswordRef = useRef()
     const [user, setUser] = useState({
         username: '',
         password: '',
@@ -43,22 +41,20 @@ function SignupPage() {
     const onFormSumit = (e) => {
         e.preventDefault()
         console.log(user)
-        if (user.password !== user.confirmPassword) {
-            setUser((prevState) => ({ ...prevState, confirmPassword: '' }))
-            confirmPasswordRef.current.classList.add('error')
-        } else {
-            confirmPasswordRef.current.classList.remove('error')
-            addNewUserToDb(user)
-            navigate('/');
-        }
-    }
-    const addNewUserToDb = async (user) => {
-        await addDoc(userCollection, { username: user.username, password: user.password })
-
-        const fetchUsersFunc = () => {
-            dispatch(fetchUsers())
-        }
-        fetchUsersFunc();
+        dbUsers.forEach(item => {
+            if (item.username.stringValue === user.username) {
+                alert('User already Exists')
+            } else {
+                if (user.password !== user.confirmPassword) {
+                    setUser((prevState) => ({ ...prevState, confirmPassword: '' }))
+                    confirmPasswordRef.current.classList.add('error')
+                } else {
+                    confirmPasswordRef.current.classList.remove('error')
+                    dispatch(addUser(user))
+                    navigate('/');
+                }
+            }
+        })
     }
 
 
