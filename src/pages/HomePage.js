@@ -1,18 +1,32 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { toggleLoginStatus } from '../redux/UsersReducer'
+import Header from '../components/Header'
+import { products } from '../database/DummyDB'
 
 function Homepage() {
-    const currentUser = useSelector(state => state.UsersReducer.currentUser)
-    const dispatch = useDispatch()
-    const changeLoginStatus = () => {
-        dispatch(toggleLoginStatus())
-    }
+    console.log(products)
     return (
         <div>
-            <h3>Hi {currentUser.username}</h3>
-            <button onClick={changeLoginStatus} className='btn btn-danger'>Logout</button>
-            <h3>Homepage</h3>
+            <Header />
+            <div className='container'>
+                <ul className='row mt-5'>
+                    {products.map(item => {
+                        return (
+                            <li key={item.id} className='col-lg-4 col-md-6 product'>
+                                <section>
+                                    <img className='img-fluid' src={item.gallery[0]} />
+                                    <footer>
+                                        <h4>{item.name}</h4>
+                                    </footer>
+                                </section>
+                            </li>
+                        )
+                    })}
+                </ul>
+                {/* New Arravials */}
+                {/* Featured Categories */}
+                {/* Festival Collection */}
+                {/* Intagram API Integration */}
+            </div>
         </div>
     )
 }

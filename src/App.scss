@@ -1,6 +1,6 @@
 // mixins
-$primary: #10b981;
-$secondary: #202051;
+$primary: #960661;
+$secondary: #eed9dd;
 
 // Reset
 ul {
@@ -33,13 +33,28 @@ a:active {
   background: white;
   min-height: 100vh;
 
+  .container {
+    @media screen and (min-width:992px) and (max-width:1600px) {
+      width: 85%;
+    }
+  }
+
   header {
     padding: 0 10px;
     height: 50px;
     line-height: 50px;
     color: white;
-    background-color: rgba(black, .9);
+    background-color: $secondary;
 
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: rgba(black, .8);
+
+      &:hover {
+        color: $primary
+      }
+    }
 
     ul li a {
       display: block;
@@ -87,6 +102,22 @@ a:active {
       img {
         width: 50px;
         border-radius: 50%;
+      }
+    }
+
+  }
+
+  .product>section {
+    border: 1px solid rgba(black, .2);
+
+    margin-bottom: 20px;
+
+    footer {
+      text-align: center;
+      padding: 10px 15px;
+
+      h4 {
+        font-size: 20px;
       }
     }
   }

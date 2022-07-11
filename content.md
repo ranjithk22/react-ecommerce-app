@@ -17,6 +17,13 @@ status: 30:31
 * Contact Page
 * Dynamic Pages => Categories, 
 
+## Home Page
+* Header
+* New Arravials
+* Featured Categories
+* Festival Collection
+* Intagram API Integration
+
 ## Proudct
 * Product Info => Title, Discription
 * Product Thumbnail, Product Gallery
@@ -27,4 +34,3 @@ status: 30:31
 
 ## API
 * Stripe Payment
-* Instagram & Facbook Integration 
