@@ -11,7 +11,7 @@ function Homepage() {
                 <ul className='row mt-5'>
                     {products.map(item => {
                         return (
-                            <li key={item.id} className='col-lg-4 col-md-6 product'>
+                            <li key={item.id} className='col-lg-3 col-md-4 product'>
                                 <section>
                                     <img className='img-fluid' src={item.gallery[0]} />
                                     <footer>
