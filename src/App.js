@@ -7,10 +7,14 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchUsers } from './redux/UsersReducer'
+import { fetchProducts } from './redux/UsersReducer'
 import { users } from './database/DummyDB'
+import { products } from './database/DummyDB'
+
 import SignupPage from './pages/SignupPage'
 import LoginPage from './pages/LoginPage'
 import HomePage from './pages/HomePage'
+import ProductPage from './pages/ProductPage';
 
 function App() {
   const dispatch = useDispatch()
@@ -19,6 +23,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchUsers(users))
+    dispatch(fetchProducts(products))
     console.log(users)
   })
 
@@ -32,6 +37,7 @@ function App() {
         <Routes>
           <Route path="/signup" element={!isLoggedIn && <SignupPage />} />
           <Route exact path="/" element={isLoggedIn ? <HomePage /> : <LoginPage />} />
+          <Route exact path="/products/:id" element={<ProductPage />} />
         </Routes>
       </div>
     </BrowserRouter>

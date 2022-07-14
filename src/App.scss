@@ -19,6 +19,11 @@ a:active {
   text-decoration: none;
 }
 
+.nobg {
+  border: none;
+  background: none;
+}
+
 .error {
   outline: none;
   border-color: red;
@@ -107,7 +112,7 @@ a:active {
 
   }
 
-  .product>section {
+  .product {
     border: 1px solid rgba(black, .2);
 
     margin-bottom: 20px;
@@ -118,6 +123,7 @@ a:active {
 
       h4 {
         font-size: 20px;
+        margin-bottom: 0;
       }
     }
   }
