@@ -25,7 +25,7 @@ function App() {
     dispatch(fetchUsers(users))
     dispatch(fetchProducts(products))
     console.log(users)
-  })
+  }, [])
 
   useEffect(() => {
     setIsLoggedIn(newLoginStatus)

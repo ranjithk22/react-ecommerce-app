@@ -4,7 +4,8 @@ const initialState = {
    isLoggedIn: false,
    currentUser: {},
    users: [],
-   products: []
+   products: [],
+   currentProduct: {},
 }
 
 const UsersReducer = createSlice({
@@ -41,7 +42,13 @@ const UsersReducer = createSlice({
             products: payload
          }
       },
+      fetchCurrentProduct(state, { payload }) {
+         return {
+            ...state,
+            currentProduct: [...state.products.filter(item => item.id == payload)]
+         }
+      }
    }
 })
-export const { fetchUsers, addUser, currentUser, toggleLoginStatus, fetchProducts } = UsersReducer.actions
+export const { fetchUsers, addUser, currentUser, toggleLoginStatus, fetchProducts, fetchCurrentProduct } = UsersReducer.actions
 export default UsersReducer.reducer

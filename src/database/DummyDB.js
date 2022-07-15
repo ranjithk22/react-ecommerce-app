@@ -12,7 +12,7 @@ export const products = [
     {
         id: 1,
         name: 'Iktara Banaras Saree',
-        instock: 10,
+        instock: 5,
         dateAdded: '20-02-2022',
         category: 'Women',
         collections: 'glace-collection',
