@@ -112,9 +112,8 @@ a:active {
 
   }
 
-  .product {
+  .product-list {
     border: 1px solid rgba(black, .2);
-
     margin-bottom: 20px;
 
     footer {
@@ -124,6 +123,18 @@ a:active {
       h4 {
         font-size: 20px;
         margin-bottom: 0;
+      }
+    }
+  }
+
+  .product {
+    .thumbnails {
+      width: 200px;
+      display: flex;
+      flex-flow: column;
+
+      &>div {
+        cursor: pointer;
       }
     }
   }

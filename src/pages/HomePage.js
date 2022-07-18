@@ -14,7 +14,7 @@ function Homepage() {
                     {products.map(item => {
                         return (
                             <Link to={`/products/${item.id}`} key={item.id} className='col-lg-3 col-md-4 nobg' >
-                                <section className='product'>
+                                <section className='product-list'>
                                     <img className='img-fluid' src={item.gallery[0]} />
                                     <footer>
                                         <h4>{item.name}</h4>

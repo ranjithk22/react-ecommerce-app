@@ -5,7 +5,7 @@ const initialState = {
    currentUser: {},
    users: [],
    products: [],
-   currentProduct: {},
+   currentProduct: [],
 }
 
 const UsersReducer = createSlice({
@@ -45,7 +45,7 @@ const UsersReducer = createSlice({
       fetchCurrentProduct(state, { payload }) {
          return {
             ...state,
-            currentProduct: [...state.products.filter(item => item.id == payload)]
+            currentProduct: state.products.filter(item => item.id == payload)
          }
       }
    }
