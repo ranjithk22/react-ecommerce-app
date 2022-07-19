@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux'
 
 function ProductPage() {
     const { id } = useParams()
-    const imageRef = useRef()
+    const thumbnailRef = useRef()
+    const largeImageRef = useRef()
     const [currentProduct, setCurrentProduct] = useState(null)
-    const [currentImage, setCurrentImage] = useState(0)
+    const [currentImage, setCurrentImage] = useState(null)
     const { products } = useSelector(state => state.UsersReducer)
 
     const loadCurrentProduct = () => {
@@ -14,36 +15,34 @@ function ProductPage() {
         let tempProduct = tempProducts[0]
         console.log(tempProduct)
         setCurrentProduct(tempProduct)
+        setCurrentImage(tempProduct.gallery[0])
+        console.log(tempProduct.gallery[0])
     }
     useEffect(() => {
         loadCurrentProduct()
     }, [products])
 
     const selectImage = (index) => {
-        setCurrentImage(index)
         console.log(index)
-        console.log(currentImage)
+        setCurrentImage(currentProduct.gallery[index])
     }
     return (
         <div className='container mt-5 product'>
-            ProductPage:
             <div className='row'>
-                <div className='col-md-7 d-flex'>
+                <div className='col-md-6 d-flex'>
                     <div className='thumbnails'>
                         {currentProduct && currentProduct.gallery.map((item, index) => {
                             return (
-                                <div key={index} title={index} onClick={e => selectImage(e.target.title)} ref={imageRef}>
-                                    <img className='img-fluid' src={item} />
-                                </div>
+                                <img key={index} onClick={() => selectImage(index)} className='img-fluid' src={item} />
                             )
                         })}
                     </div>
                     <div>
-                        {currentProduct && (<img className='img-fluid' src={currentProduct.gallery[currentImage]} />)}
+                        {currentProduct && (<img className='img-fluid' src={currentImage} />)}
                     </div>
                 </div>
-                <div className='col-md-5'>
-                    {currentProduct && currentProduct.name}
+                <div className='col-md-6'>
+                    <h3>{currentProduct && currentProduct.name}</h3>
                 </div>
 
             </div>

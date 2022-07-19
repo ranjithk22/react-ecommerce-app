@@ -2,6 +2,12 @@
 $primary: #960661;
 $secondary: #eed9dd;
 
+@mixin ease3s() {
+  transition: all .3s ease;
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+}
+
 // Reset
 ul {
   padding: 0;
@@ -112,29 +118,61 @@ a:active {
 
   }
 
-  .product-list {
-    border: 1px solid rgba(black, .2);
-    margin-bottom: 20px;
+  .products-list {
+    position: relative;
 
-    footer {
-      text-align: center;
-      padding: 10px 15px;
+    &>a {
+      cursor: pointer;
+      z-index: 1;
+      color: rgba(black, .8);
+      @include ease3s();
 
-      h4 {
-        font-size: 20px;
-        margin-bottom: 0;
+      &:hover {
+        z-index: 9;
+
+        &>section {
+          color: white;
+          background: $primary;
+          transform: scale(1.05, 1.05);
+          box-shadow: 0 10px 30px rgba(black, .5);
+        }
+      }
+
+      &>section {
+        border-radius: 6px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(black, .2);
+        @include ease3s();
+
+        img {
+
+          border-radius: 6px 6px 0 0;
+        }
+
+        footer {
+          text-align: center;
+          padding: 10px 15px;
+
+          h4 {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
       }
     }
   }
 
   .product {
     .thumbnails {
-      width: 200px;
+      max-width: 100px;
+      min-width: 100px;
+      width: 100px;
       display: flex;
       flex-flow: column;
 
-      &>div {
+      >img {
         cursor: pointer;
+        margin: 0 5px 5px 0;
       }
     }
   }
