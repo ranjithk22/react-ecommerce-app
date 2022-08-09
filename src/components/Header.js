@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleLoginStatus } from '../redux/UsersReducer'
 
@@ -11,7 +12,7 @@ function Header() {
     return (
         <header className='d-flex'>
             <div>
-                <a href="#" className="logo">Glance Collections</a>
+                <Link className="logo" to='/'>Glance Collections</Link>
             </div>
             <div className='d-flex ms-auto'>
                 <ul>

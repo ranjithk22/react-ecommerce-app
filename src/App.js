@@ -2,19 +2,19 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import './App.scss';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'
 
 import { fetchUsers } from './redux/UsersReducer'
 import { fetchProducts } from './redux/UsersReducer'
-import { users } from './database/DummyDB'
-import { products } from './database/DummyDB'
+import { users } from './database/db'
+import { products } from './database/db'
 
 import SignupPage from './pages/SignupPage'
 import LoginPage from './pages/LoginPage'
 import HomePage from './pages/HomePage'
-import ProductPage from './pages/ProductPage';
+import ProductPage from './pages/ProductPage'
 
 function App() {
   const dispatch = useDispatch()
@@ -35,9 +35,11 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/signup" element={!isLoggedIn && <SignupPage />} />
-          <Route exact path="/" element={isLoggedIn ? <HomePage /> : <LoginPage />} />
-          <Route exact path="/products/:id" element={<ProductPage />} />
+          <Route path='/' element={
+            isLoggedIn ? <HomePage /> : <LoginPage />
+          }
+          />
+          <Route path='/signup' element={<SignupPage />} />
         </Routes>
       </div>
     </BrowserRouter>

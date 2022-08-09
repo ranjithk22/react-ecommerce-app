@@ -1,29 +1,19 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Routes, Route } from 'react-router-dom'
 import Header from '../components/Header'
+import ProductPage from './ProductPage'
+import ProductsListPage from './ProductsListPage'
 
 function Homepage() {
-    const { products } = useSelector(state => state.UsersReducer)
 
     return (
         <div>
             <Header />
             <div className='container'>
-                <ul className='row mt-5 products-list'>
-                    {products.map(item => {
-                        return (
-                            <Link to={`/products/${item.id}`} key={item.id} className='col-lg-3 col-md-4 nobg ' >
-                                <section>
-                                    <img className='img-fluid' src={item.gallery[0]} />
-                                    <footer>
-                                        <h4>{item.name}</h4>
-                                    </footer>
-                                </section>
-                            </Link>
-                        )
-                    })}
-                </ul>
+                <Routes>
+                    <Route path='/' element={<ProductsListPage />} />
+                    <Route path='/products/:id' element={<ProductPage />} />
+                </Routes>
                 {/* New Arravials */}
                 {/* Featured Categories */}
                 {/* Festival Collection */}

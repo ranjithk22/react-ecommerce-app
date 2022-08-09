@@ -4,8 +4,6 @@ import { useSelector } from 'react-redux'
 
 function ProductPage() {
     const { id } = useParams()
-    const thumbnailRef = useRef()
-    const largeImageRef = useRef()
     const [currentProduct, setCurrentProduct] = useState(null)
     const [currentImage, setCurrentImage] = useState(null)
     const { products } = useSelector(state => state.UsersReducer)
@@ -42,7 +40,15 @@ function ProductPage() {
                     </div>
                 </div>
                 <div className='col-md-6'>
-                    <h3>{currentProduct && currentProduct.name}</h3>
+                    <div className='card ms-5 p-3'>
+                        {currentProduct && (
+                            <div>
+                                <h3 className='mb-3'>{currentProduct.name}</h3>
+                                <p><strong>Price:</strong> {currentProduct.price}</p>
+                                <p><strong>Instock:</strong> {currentProduct.instock.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
             </div>
