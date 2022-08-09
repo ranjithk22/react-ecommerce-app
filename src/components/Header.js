@@ -1,13 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleLoginStatus } from '../redux/UsersReducer'
 
 function Header() {
+    const navigate = useNavigate()
     const currentUser = useSelector(state => state.UsersReducer.currentUser)
     const dispatch = useDispatch()
     const changeLoginStatus = () => {
         dispatch(toggleLoginStatus())
+        navigate('/');
     }
     return (
         <header className='d-flex'>

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from "react-router-dom"
+import { Link } from 'react-router-dom'
 import { addUser } from '../redux/UsersReducer'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -59,17 +60,32 @@ function SignupPage() {
 
 
     return (
-        <div className='container'>
-            <h3>Signup</h3>
-            <form onSubmit={onFormSumit}>
-                <label>Username</label>
-                <input type="text" value={user.username} onChange={onUsernameChange} />
-                <label>Password</label>
-                <input type="text" value={user.password} onChange={onPasswordChange} />
-                <label>Confirm Password</label>
-                <input type="text" ref={confirmPasswordRef} value={user.confirmPassword} onChange={onConfirmPasswordChange} onBlur={checkBothPasswordValues} />
-                <button type='submit'>Submit</button>
-            </form>
+        <div className='login-wrapper d-flex align-items-center justify-content-center'>
+            <div className='card p-4'>
+            <h3 className='mb-3 text-center'>Signup</h3>
+                <form onSubmit={onFormSumit}>
+                    <div className='mb-2'>
+                        <label>Enter Username</label>
+                        <input className='form-control mt-2' type="text" value={user.username} onChange={onUsernameChange} />
+                    </div>
+                    <div className='mb-3'>
+                        <label>Password</label>
+                        <input className='form-control mt-2' type="text" value={user.password} onChange={onPasswordChange} />
+                    </div>
+                    <div className='mb-3'>
+                        <label>Confirm Password</label>
+                        <input className='form-control mt-2'type="text" ref={confirmPasswordRef} value={user.confirmPassword} onChange={onConfirmPasswordChange} onBlur={checkBothPasswordValues} />
+                    </div>
+                    <div className='d-flex'>
+                        <button type='submit' className='btn btn-primary m-auto'>Submit</button>
+                    </div>
+                </form>
+                <hr />
+                <div className='d-flex text-center flex-column'>
+                    <p>Already have account</p>
+                    <Link to="/" className='btn btn-outlined-primary m-auto'>Login</Link>
+                </div>
+            </div>
         </div>
     )
 }

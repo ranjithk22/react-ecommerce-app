@@ -35,11 +35,17 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path='/' element={
-            isLoggedIn ? <HomePage /> : <LoginPage />
+          { isLoggedIn ?
+            <>
+              <Route path='/*' element={<HomePage />} />
+              <Route path='products/:id' element={<ProductPage />} />
+            </>
+            : 
+            <>
+              <Route path='/*' element={<LoginPage />} />
+              <Route path='/signup' element={<SignupPage />} />
+            </>
           }
-          />
-          <Route path='/signup' element={<SignupPage />} />
         </Routes>
       </div>
     </BrowserRouter>

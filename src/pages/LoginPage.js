@@ -13,6 +13,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         dispatch(fetchUsers())
+        console.log('Fetch Users')
     }, [])
 
     const onUsernameChange = (e) => {
@@ -35,17 +36,28 @@ const LoginPage = () => {
     }
 
     return (
-        <div className='container'>
-            <h3>Login</h3>
-            <form onSubmit={onFormSumit}>
-                <label>Enter Username</label>
-                <input type="text" value={user.username} onChange={onUsernameChange} />
-                <label>Password</label>
-                <input type="text" value={user.password} onChange={onPasswordChange} />
-                <button type='submit' className='btn btn-primary'>Login</button>
-            </form>
-            <hr />
-            <Link to="/signup" className='btn btn-primary'>Signup</Link>
+        <div className='login-wrapper d-flex align-items-center justify-content-center'>
+            <div className='card p-4'>
+            <h3 className='mb-3 text-center'>Login</h3>
+                <form onSubmit={onFormSumit}>
+                    <div className='mb-2'>
+                        <label>Enter Username</label>
+                        <input className='form-control mt-2' type="text" value={user.username} onChange={onUsernameChange} />
+                    </div>
+                    <div className='mb-3'>
+                        <label>Password</label>
+                        <input className='form-control mt-2' type="text" value={user.password} onChange={onPasswordChange} />
+                    </div>
+                    <div className='d-flex'>
+                        <button type='submit' className='btn btn-primary m-auto'>Login</button>
+                    </div>
+                </form>
+                <hr />
+                <div className='d-flex text-center flex-column'>
+                    <p className=''>Don't have account</p>
+                    <Link to="/signup" className='btn btn-outlined-primary m-auto'>Signup</Link>
+                </div>
+            </div>
         </div>
     )
 }
