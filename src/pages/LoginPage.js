@@ -6,6 +6,7 @@ import { currentUser, toggleLoginStatus, fetchUsers } from '../redux/UsersReduce
 const LoginPage = () => {
     const dbUsers = useSelector(state => state.UsersReducer.users)
     const dispatch = useDispatch()
+    const [hideIt, setHideIt] = useState(false)
     const [user, setUser] = useState({
         username: '',
         password: ''
@@ -23,22 +24,34 @@ const LoginPage = () => {
         setUser((prevState) => ({ ...prevState, password: e.target.value }))
     }
 
+    const credentialsAlert = () => {
+        setTimeout(() => {
+            setHideIt(false)
+        }, 1000)
+    }
+
     const onFormSumit = (e) => {
         e.preventDefault()
-        const newUser = dbUsers.find(item => item.username === user.username)
+        const newUser = dbUsers.find(item => {
+            if (item.username === user.username & item.password === user.password) {
+                console.log(item)
+                return item
+            }
+        })
+
         if (newUser) {
-            alert("User Exists")
             dispatch(toggleLoginStatus())
             dispatch(currentUser(user))
         } else {
-            alert("User Doesn't Exists")
+            setHideIt(true)
+            credentialsAlert()
         }
     }
 
     return (
         <div className='login-wrapper d-flex align-items-center justify-content-center'>
             <div className='card p-4'>
-            <h3 className='mb-3 text-center'>Login</h3>
+                <h3 className='mb-3 text-center'>Login</h3>
                 <form onSubmit={onFormSumit}>
                     <div className='mb-2'>
                         <label>Enter Username</label>
@@ -51,6 +64,11 @@ const LoginPage = () => {
                     <div className='d-flex'>
                         <button type='submit' className='btn btn-primary m-auto'>Login</button>
                     </div>
+                    {hideIt &&
+                        <div className={`alert alert-danger mt-4 text-center hide-it ${hideIt && 'hide-it'}`} role="alert">
+                            Credential are wrong
+                        </div>
+                    }
                 </form>
                 <hr />
                 <div className='d-flex text-center flex-column'>

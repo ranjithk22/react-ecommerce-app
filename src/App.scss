@@ -1,5 +1,5 @@
 // mixins
-$primary: #960661;
+$primary: #dc3545;
 $secondary: #eed9dd;
 
 @mixin ease3s() {
@@ -24,22 +24,27 @@ a:focus,
 a:active {
   text-decoration: none;
 }
-.btn-primary{
+
+.btn-primary {
   background: rgba($primary, .8);
   border-color: rgba($primary, .8);
-  &:hover{
+
+  &:hover {
     background: $primary;
-    border-color:$primary;
+    border-color: $primary;
   }
 }
-.btn-outlined-primary{
-  border-color:$primary;
-  &:hover{
+
+.btn-outlined-primary {
+  border-color: $primary;
+
+  &:hover {
     color: white;
     background: $primary;
-    border-color:$primary;
+    border-color: $primary;
   }
 }
+
 .nobg {
   border: none;
   background: none;
@@ -59,15 +64,17 @@ a:active {
   background: white;
   min-height: 100vh;
 
-  .login-wrapper{
+  .login-wrapper {
     height: 100vh;
-    .card{
+
+    .card {
       width: 400px;
       border-radius: 10px;
-      border:2px solid #FFF;
-      border-bottom:5px solid #960661;
+      border: 2px solid #FFF;
+      border-bottom: 5px solid #960661;
       box-shadow: 0 0 50px rgba(black, .1);
-      .btn{
+
+      .btn {
         width: 200px;
       }
     }
@@ -81,8 +88,7 @@ a:active {
 
   header {
     padding: 0 10px;
-    height: 50px;
-    line-height: 50px;
+    height: 54px;
     color: white;
     background-color: $secondary;
 
@@ -96,8 +102,11 @@ a:active {
       }
     }
 
-    ul li a {
+    ul li a.nav-link {
       display: block;
+      padding: 0;
+      color: white;
+      margin-right: 20px;
 
       i {
         font-size: 30px;
@@ -204,7 +213,8 @@ a:active {
         margin: 0 5px 5px 0;
       }
     }
-    select{
+
+    select {
       width: 200px;
     }
   }
