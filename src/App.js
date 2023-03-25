@@ -4,43 +4,67 @@ import './App.scss';
 
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
 
-import { fetchUsers } from './redux/UsersReducer'
 import { fetchProducts } from './redux/UsersReducer'
-import { users } from './database/db'
 import { products } from './database/db'
 
-import SignupPage from './pages/SignupPage'
+import { UseAuth } from './auth/AuthProvider'
+import SignupPage from './pages/SignupPage2'
 import LoginPage from './pages/LoginPage'
 import HomePage from './pages/HomePage'
 import ProductPage from './pages/ProductPage'
+import LayoutPage from './components/LayoutPage';
+import { useDispatch } from 'react-redux';
 
 function App() {
+  const [isLogged, setIsLogged] = useState(false)
+  const auth = UseAuth()
   const dispatch = useDispatch()
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const newLoginStatus = useSelector(state => state.UsersReducer.isLoggedIn)
 
+  // Get Login status for Local Storage
+  let currentStatus = JSON.parse(localStorage.getItem('loginStatus'))
+
+  // App On First Load 
   useEffect(() => {
-    dispatch(fetchUsers(users))
-    dispatch(fetchProducts(products))
-    console.log(users)
+    if (!currentStatus) {
+      localStorage.setItem('loginUser', JSON.stringify(''))
+      localStorage.setItem('loginStatus', JSON.stringify(false))
+    } else {
+      auth.logIn(JSON.parse(localStorage.getItem('loginUser')))
+    }
+
   }, [])
 
+
+
+  // Set user on Login & add products from database to redux
   useEffect(() => {
-    setIsLoggedIn(newLoginStatus)
-  }, [newLoginStatus])
+    if (currentStatus) {
+      setIsLogged(true)
+      dispatch(fetchProducts(products))
+
+      setTimeout(() => {
+        localStorage.setItem('loginUser', JSON.stringify(''))
+        localStorage.setItem('loginStatus', JSON.stringify(false))
+        auth.logOut()
+      }, 86400000)
+
+    } else {
+      setIsLogged(false)
+    }
+    console.log(currentStatus)
+  }, [currentStatus])
 
   return (
     <BrowserRouter>
       <div className="App">
         <Routes>
-          { isLoggedIn ?
-            <>
+          {isLogged ?
+            <Route element={<LayoutPage />}>
               <Route path='/*' element={<HomePage />} />
               <Route path='products/:id' element={<ProductPage />} />
-            </>
-            : 
+            </Route>
+            :
             <>
               <Route path='/*' element={<LoginPage />} />
               <Route path='/signup' element={<SignupPage />} />

@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleLoginStatus } from '../redux/UsersReducer'
+import { UseAuth } from '../auth/AuthProvider'
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
 function Header() {
     const navigate = useNavigate()
-    const currentUser = useSelector(state => state.UsersReducer.currentUser)
-    const dispatch = useDispatch()
+    const [user, setUser] = useState({})
+    const auth = UseAuth()
+
+    useEffect(() => {
+        setUser(auth.user)
+    }, [])
+
     const changeLoginStatus = () => {
-        dispatch(toggleLoginStatus())
+        auth.logOut()
         navigate('/');
     }
     return (
@@ -24,7 +30,7 @@ function Header() {
                     <li>
                         <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic" className='btn btn-primary'>
-                                {currentUser.username}
+                                {user.username}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Dropdown.Item>View Profile</Dropdown.Item>

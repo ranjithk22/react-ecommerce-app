@@ -12,7 +12,7 @@ import Product6Img1 from '../assets/products/product-6/1.png'
 
 export const users = [
     {
-        username: 'Ranjith',
+        username: 'ranjith',
         password: 'kumar',
     },
     {

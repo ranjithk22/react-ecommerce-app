@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import Header from '../components/Header'
 
 function Homepage() {
     const { products } = useSelector(state => state.UsersReducer)
 
     return (
         <div>
-            <Header />
             <div className='container'>
                 <ul className='row mt-5 products-list'>
                     {products.map(item => {

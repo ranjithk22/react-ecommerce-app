@@ -1,20 +1,19 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { currentUser, toggleLoginStatus, fetchUsers } from '../redux/UsersReducer'
+import { users } from '../database/db'
+import { UseAuth } from '../auth/AuthProvider'
 
 const LoginPage = () => {
-    const dbUsers = useSelector(state => state.UsersReducer.users)
-    const dispatch = useDispatch()
-    const [hideIt, setHideIt] = useState(false)
+    const [loddedUsers, setLoddedUsers] = useState([])
+    const [hideIt, setHideIt] = useState('')
     const [user, setUser] = useState({
         username: '',
         password: ''
     })
 
+    const auth = UseAuth()
     useEffect(() => {
-        dispatch(fetchUsers())
-        console.log('Fetch Users')
+        setLoddedUsers(users)
     }, [])
 
     const onUsernameChange = (e) => {
@@ -24,27 +23,20 @@ const LoginPage = () => {
         setUser((prevState) => ({ ...prevState, password: e.target.value }))
     }
 
-    const credentialsAlert = () => {
-        setTimeout(() => {
-            setHideIt(false)
-        }, 1000)
-    }
 
     const onFormSumit = (e) => {
         e.preventDefault()
-        const newUser = dbUsers.find(item => {
-            if (item.username === user.username & item.password === user.password) {
+        const newUser = loddedUsers.find(item => {
+            if (item.username === user.username && item.password === user.password) {
                 console.log(item)
                 return item
             }
         })
 
         if (newUser) {
-            dispatch(toggleLoginStatus())
-            dispatch(currentUser(user))
+            auth.logIn(user)
         } else {
             setHideIt(true)
-            credentialsAlert()
         }
     }
 
@@ -72,7 +64,7 @@ const LoginPage = () => {
                 </form>
                 <hr />
                 <div className='d-flex text-center flex-column'>
-                    <p className=''>Don't have account</p>
+                    <p>Don't have account</p>
                     <Link to="/signup" className='btn btn-outlined-primary m-auto'>Signup</Link>
                 </div>
             </div>

@@ -78,7 +78,6 @@ function ProductPage() {
 
     return (
         <>
-            <Header />
             <div className='container mt-5 product'>
                 <div className='row'>
                     <div className='col-md-6 d-flex'>
