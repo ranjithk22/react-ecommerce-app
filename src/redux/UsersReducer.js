@@ -5,6 +5,7 @@ const initialState = {
    users: [],
    products: [],
    currentProduct: [],
+   cart: []
 }
 
 const UsersReducer = createSlice({
@@ -41,13 +42,35 @@ const UsersReducer = createSlice({
             products: payload
          }
       },
-      fetchCurrentProduct(state, { payload }) {
+      updateNewProduct(state, { payload }) {
          return {
             ...state,
-            currentProduct: state.products.filter(item => item.id == payload)
+            products: state.products.map(item => {
+               if (item.id == payload.id) {
+                  item = payload
+               }
+               return item
+            })
+         }
+      },
+      addProductToCart(state, { payload }) {
+         return {
+            ...state,
+            cart: [...state.cart, payload]
+         }
+      },
+      updateCartItem(state, { payload }) {
+         return {
+            ...state,
+            cart: state.cart.map(item => {
+               if (item.id == payload.id) {
+                  item.instock = item.instock + payload.instock
+               }
+               return item
+            })
          }
       }
    }
 })
-export const { fetchUsers, addUser, currentUser, toggleLoginStatus, fetchProducts, fetchCurrentProduct } = UsersReducer.actions
+export const { fetchUsers, addUser, currentUser, toggleLoginStatus, fetchProducts, updateCartItem, updateNewProduct, addProductToCart } = UsersReducer.actions
 export default UsersReducer.reducer

@@ -3,9 +3,9 @@ $primary: #dc3545;
 $secondary: #eed9dd;
 
 @mixin ease3s() {
-  transition: all .3s ease;
-  -webkit-transition: all .3s ease;
-  -moz-transition: all .3s ease;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
 }
 
 // Reset
@@ -25,13 +25,18 @@ a:active {
   text-decoration: none;
 }
 
-.btn-primary {
-  background: rgba($primary, .8);
-  border-color: rgba($primary, .8);
+.btn-primary,
+.show.dropdown .btn-primary .btn-success,
+.show.dropdown .btn-success {
+  background: rgba($primary, 0.8);
+  border-color: rgba($primary, 0.8);
 
-  &:hover {
+  &:hover,
+  &:focus,
+  &:active {
     background: $primary;
     border-color: $primary;
+    box-shadow: none;
   }
 }
 
@@ -70,9 +75,9 @@ a:active {
     .card {
       width: 400px;
       border-radius: 10px;
-      border: 2px solid #FFF;
+      border: 2px solid #fff;
       border-bottom: 5px solid #960661;
-      box-shadow: 0 0 50px rgba(black, .1);
+      box-shadow: 0 0 50px rgba(black, 0.1);
 
       .btn {
         width: 200px;
@@ -81,7 +86,7 @@ a:active {
   }
 
   .container {
-    @media screen and (min-width:992px) and (max-width:1600px) {
+    @media screen and (min-width: 992px) and (max-width: 1600px) {
       width: 85%;
     }
   }
@@ -90,22 +95,22 @@ a:active {
     padding: 0 10px;
     height: 54px;
     color: white;
-    background-color: $secondary;
+    background-color: #ffefde;
 
     .logo {
       font-size: 20px;
       font-weight: bold;
-      color: rgba(black, .8);
+      color: rgba(black, 0.8);
 
       &:hover {
-        color: $primary
+        color: $primary;
       }
     }
 
     ul li a.nav-link {
       display: block;
       padding: 0;
-      color: white;
+      color: black;
       margin-right: 20px;
 
       i {
@@ -118,7 +123,7 @@ a:active {
     padding: 20px 0;
     min-height: calc(100vh - 50px);
     color: white;
-    background-color: rgba(black, .8);
+    background-color: rgba(black, 0.8);
 
     h4 {
       font-size: 18px;
@@ -145,7 +150,7 @@ a:active {
   .main-content {
     padding: 20px 30px;
     min-height: calc(100vh - 50px);
-    background-color: rgba(black, .2);
+    background-color: rgba(black, 0.2);
 
     .customers {
       img {
@@ -153,37 +158,35 @@ a:active {
         border-radius: 50%;
       }
     }
-
   }
 
   .products-list {
     position: relative;
 
-    &>a {
+    & > a {
+      display: block;
       cursor: pointer;
       z-index: 1;
-      color: rgba(black, .8);
+      color: rgba(black, 0.8);
       @include ease3s();
 
       &:hover {
         z-index: 9;
 
-        &>section {
+        & > section {
           color: white;
           background: $primary;
-          transform: scale(1.05, 1.05);
-          box-shadow: 0 10px 30px rgba(black, .5);
+          box-shadow: 0 10px 30px rgba(black, 0.5);
         }
       }
 
-      &>section {
+      & > section {
         border-radius: 6px;
         margin-bottom: 20px;
-        border: 1px solid rgba(black, .2);
+        border: 1px solid rgba(black, 0.2);
         @include ease3s();
 
         img {
-
           border-radius: 6px 6px 0 0;
         }
 
@@ -208,7 +211,7 @@ a:active {
       display: flex;
       flex-flow: column;
 
-      >img {
+      > img {
         cursor: pointer;
         margin: 0 5px 5px 0;
       }
@@ -216,6 +219,50 @@ a:active {
 
     select {
       width: 200px;
+    }
+    .sizes {
+      .form-check {
+        &.non-active {
+          opacity: 0.3;
+        }
+        position: relative;
+        padding-left: 0;
+        .form-check-input[type="radio"] {
+          position: absolute;
+          padding-left: 0;
+          border-radius: 0;
+          width: 36px;
+          height: 31px;
+          left: 24px;
+          top: -4px;
+          opacity: 0;
+        }
+        .form-check-input ~ label {
+          min-width: 36px;
+          text-align: center;
+          padding: 3px 6px;
+          margin-right: 10px;
+          background: none;
+          border: 1px solid #ddd;
+        }
+        .form-check-input:checked ~ label {
+          border-color: $primary;
+          &:hover,
+          &:focus {
+            border-color: #ddd;
+          }
+        }
+      }
+    }
+  }
+  .cart {
+    tbody tr {
+      vertical-align: middle;
+      td {
+        img {
+          width: 50px;
+        }
+      }
     }
   }
 }

@@ -5,7 +5,6 @@ import { toggleLoginStatus } from '../redux/UsersReducer'
 import { UseAuth } from '../auth/AuthProvider'
 import Dropdown from 'react-bootstrap/Dropdown';
 
-
 function Header() {
     const navigate = useNavigate()
     const [user, setUser] = useState({})
@@ -26,7 +25,8 @@ function Header() {
             </div>
             <div className='d-flex ms-auto'>
                 <ul className='d-flex align-items-center'>
-                    <li><a className='nav-link' href="#">Home</a></li>
+                    <li><Link className='nav-link' to="/">Home</Link></li>
+                    <li><Link className='nav-link' to="/cart">Cart</Link></li>
                     <li>
                         <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic" className='btn btn-primary'>

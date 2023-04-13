@@ -1,50 +1,46 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import Header from '../components/Header'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateCartItem, updateNewProduct, addProductToCart } from '../redux/UsersReducer'
 
 function ProductPage() {
 
     // Module 1 - Get Product Data
-
+    const navigate = useNavigate()
     const { products } = useSelector(state => state.UsersReducer)
+    const { cart } = useSelector(state => state.UsersReducer)
+
     const { id } = useParams()
     const [currentProduct, setCurrentProduct] = useState(null)
+    const dispatch = useDispatch()
 
     const loadCurrentProduct = () => {
         let tempProducts = products.filter(item => item.id == id)
         let tempProduct = tempProducts[0]
-        console.log(tempProduct)
         setCurrentProduct(tempProduct)
         setCurrentImage(tempProduct.gallery[0])
-        console.log(tempProduct.gallery[0])
     }
     useEffect(() => {
         loadCurrentProduct()
     }, [products])
-
-    ///////////////////////////
 
     // Module 2 - Image Gallery
 
     const [currentImage, setCurrentImage] = useState(null)
 
     const selectImage = (index) => {
-        console.log(index)
         setCurrentImage(currentProduct.gallery[index])
     }
-
-    ///////////////////////////
 
     // Module 3 - add product to cart 
 
     const sizeRef = useRef()
     const [addProduct, setAddProduct] = useState(null)
     const [noOfProducts, setNoOfProducts] = useState(0)
-    console.log('no of products', noOfProducts)
 
     // increment no of products
-    const incrementProducts = () => {
+    const incrementProducts = (e) => {
+        e.preventDefault()
         if (currentProduct.instock > 0) {
             setCurrentProduct(prevState => ({
                 ...prevState,
@@ -55,7 +51,8 @@ function ProductPage() {
     }
 
     // decrement no of products
-    const decrementProducts = () => {
+    const decrementProducts = (e) => {
+        e.preventDefault()
         if (noOfProducts > 0) {
             setCurrentProduct(prevState => ({
                 ...prevState,
@@ -64,16 +61,37 @@ function ProductPage() {
             setNoOfProducts(prevCounter => prevCounter - 1)
         }
     }
+    const [size, setSize] = useState('')
+    const setSelectedSize = (index) => {
+        if (currentProduct.size[index].active !== false) {
+            setSize(currentProduct.size[index].sizeCode)
+        }
+    }
 
     // on addToCart button click
     const addToCart = (e) => {
         e.preventDefault()
-        if (noOfProducts > 0) {
-            setAddProduct({ ...currentProduct, size: sizeRef.current.value, numberOfProducts: noOfProducts, instock: (currentProduct.instock - 1) })
-            setCurrentProduct({ ...currentProduct, instock: (currentProduct.instock - 1) })
+        if (noOfProducts > 0 && size !== '' && noOfProducts > 0) {
+            setAddProduct({ ...currentProduct, size: size, numberOfProducts: noOfProducts, instock: (currentProduct.instock - 1) })
+            console.log(cart)
+            cart.forEach(item => {
+                if (item.id == Number(id)) {
+                    console.log('its Old Item')
+                    dispatch(updateCartItem(currentProduct))
+                } else {
+                    console.log('its New Item')
+                    dispatch(addProductToCart({ ...currentProduct, size: size, numberOfProducts: noOfProducts }))
+                }
+            })
+            if (cart.length == 0) {
+                dispatch(addProductToCart({ ...currentProduct, size: size, numberOfProducts: noOfProducts }))
+            }
+
+            dispatch(updateNewProduct(currentProduct))
+            setNoOfProducts(0)
+        } else {
+            alert('Choose Quantity & size')
         }
-        console.log(currentProduct)
-        console.log(addProduct)
     }
 
     return (
@@ -95,24 +113,30 @@ function ProductPage() {
                     <div className='col-md-6'>
                         <div className='card ms-5 p-3'>
                             {currentProduct && (
-                                <form onSubmit={addToCart}>
+                                <form >
                                     <h3 className='mb-3'>{currentProduct.name}</h3>
                                     <p><strong>Price:</strong> {currentProduct.price}</p>
                                     <p><strong>Instock:</strong> {currentProduct.instock}</p>
-                                    <select className='form-select mb-3'>
+                                    <div className='sizes d-flex mb-3'>
                                         {currentProduct.size.map((item, index) => {
                                             return (
-                                                <option key={index} ref={sizeRef} value={item}>{item}</option>
+                                                <div className={item.active ? 'form-check' : 'form-check non-active'} key={index}>
+                                                    <input name="flexRadioDefault" ref={sizeRef} id="flexRadioDefault" value={item.sizeCode} type="radio" className="form-check-input" onClick={() => setSelectedSize(index)} />
+                                                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                                                        {item.sizeCode}
+                                                    </label>
+                                                </div>
+
                                             )
                                         })}
-                                    </select>
+                                    </div>
                                     <div className='btn-group mb-3'>
                                         <button onClick={decrementProducts} className='btn btn-light'>-</button>
                                         <button className='btn btn-light'>{noOfProducts}</button>
                                         <button onClick={incrementProducts} className='btn btn-light'>+</button>
                                     </div>
                                     <div>
-                                        <button className='btn btn-primary' type='submit'>Add to Cart</button>
+                                        <button className='btn btn-primary' type='submit' onClick={addToCart}>Add to Cart</button>
                                     </div>
                                 </form>
                             )}

@@ -4,6 +4,7 @@ import { users } from '../database/db'
 import { UseAuth } from '../auth/AuthProvider'
 
 const LoginPage = () => {
+    const auth = UseAuth()
     const [loddedUsers, setLoddedUsers] = useState([])
     const [hideIt, setHideIt] = useState('')
     const [user, setUser] = useState({
@@ -11,7 +12,6 @@ const LoginPage = () => {
         password: ''
     })
 
-    const auth = UseAuth()
     useEffect(() => {
         setLoddedUsers(users)
     }, [])
@@ -22,7 +22,6 @@ const LoginPage = () => {
     const onPasswordChange = (e) => {
         setUser((prevState) => ({ ...prevState, password: e.target.value }))
     }
-
 
     const onFormSumit = (e) => {
         e.preventDefault()
@@ -39,6 +38,7 @@ const LoginPage = () => {
             setHideIt(true)
         }
     }
+
 
     return (
         <div className='login-wrapper d-flex align-items-center justify-content-center'>

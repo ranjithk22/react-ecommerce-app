@@ -15,6 +15,7 @@ import HomePage from './pages/HomePage'
 import ProductPage from './pages/ProductPage'
 import LayoutPage from './components/LayoutPage';
 import { useDispatch } from 'react-redux';
+import Cart from './pages/Cart';
 
 function App() {
   const [isLogged, setIsLogged] = useState(false)
@@ -56,12 +57,13 @@ function App() {
   }, [currentStatus])
 
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <div className="App">
         <Routes>
           {isLogged ?
             <Route element={<LayoutPage />}>
-              <Route path='/*' element={<HomePage />} />
+              <Route path='/' element={<HomePage />} />
+              <Route path='/cart' element={<Cart />} />
               <Route path='products/:id' element={<ProductPage />} />
             </Route>
             :
@@ -72,7 +74,7 @@ function App() {
           }
         </Routes>
       </div>
-    </BrowserRouter>
+    </BrowserRouter >
   );
 }
 
