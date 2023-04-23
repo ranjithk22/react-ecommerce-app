@@ -2,11 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 function Cart() {
     const { cart } = useSelector(state => state.UsersReducer)
+    const { totalAmount } = useSelector(state => state.UsersReducer)
     const [cartItems, setCartItems] = useState([])
+
     useEffect(() => {
         setCartItems([...cart])
         console.log(cart, cartItems)
     }, [])
+
+    const getTotalAmount = () => {
+        return (
+            <tr>
+                <td colSpan="4"></td>
+                <td>Total Amout</td>
+                <td>{totalAmount}</td>
+            </tr>
+        )
+    }
     return (
         <div className='container'>
             <div className='table-responsive cart my-5'>
@@ -16,7 +28,7 @@ function Cart() {
                             <td></td>
                             <td>Name</td>
                             <td>Price</td>
-                             <td>Size</td>
+                            <td>Size</td>
                             <td>Number of items</td>
                             <td>Total</td>
                         </tr>
@@ -35,6 +47,9 @@ function Cart() {
                                     </tr>
                                 )
                             })
+                        }
+                        {
+                            cartItems.length > 0 ? getTotalAmount() : ''
                         }
                     </tbody>
                 </table>

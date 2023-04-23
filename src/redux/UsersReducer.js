@@ -5,7 +5,8 @@ const initialState = {
    users: [],
    products: [],
    currentProduct: [],
-   cart: []
+   cart: [],
+   totalAmount: 0
 }
 
 const UsersReducer = createSlice({
@@ -56,7 +57,8 @@ const UsersReducer = createSlice({
       addProductToCart(state, { payload }) {
          return {
             ...state,
-            cart: [...state.cart, payload]
+            cart: [...state.cart, payload],
+            totalAmount: state.totalAmount + (payload.price * payload.numberOfProducts)
          }
       },
       updateCartItem(state, { payload }) {
@@ -68,6 +70,12 @@ const UsersReducer = createSlice({
                }
                return item
             })
+         }
+      },
+      updateTotalAmount(state, { payload }) {
+         return {
+            ...state,
+
          }
       }
    }
